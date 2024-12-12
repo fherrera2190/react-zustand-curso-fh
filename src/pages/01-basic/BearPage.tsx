@@ -68,13 +68,23 @@ export const PandaBears = () => {
 };
 
 export const BearsDisplay = () => {
+  //No se rederiza de nuevo
   const bears = useBearStore(useShallow((state) => state.bears));
+
+  //Se renderiza de nuevo, por que induce que el estado cambio
+  // const bears = useBearStore(useShallow((state) => state.bears));
+
   const doNothing = useBearStore((state) => state.doNothing);
+  const addBear = useBearStore(state => state.addBear);
+  const clearBear = useBearStore(state => state.clearBear);
 
   return (
     <WhiteCard>
       <h1>Osos</h1>
-      <button onClick={doNothing}>do nothing</button>
+      <button className="mt-2" onClick={doNothing}>Do nothing</button>
+      <button className="mt-2" onClick={addBear}>Add Bear</button>
+      <button className="mt-2" onClick={clearBear}>Clear Bears</button>
+
       <pre>{JSON.stringify(bears, null, 2)}</pre>
     </WhiteCard>
   );
