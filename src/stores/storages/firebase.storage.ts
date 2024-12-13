@@ -1,7 +1,8 @@
 import { createJSONStorage, StateStorage } from "zustand/middleware";
+import { config } from "../../config/config";
 
-const firebaseUrl =
-  "https://zustand-storage-f673f-default-rtdb.firebaseio.com/zustand";
+const firebaseUrl = config.firebaseUrl;
+console.log(config.firebaseUrl);
 
 const storageApi: StateStorage = {
   getItem: async function (name: string): Promise<string | null> {
@@ -14,7 +15,6 @@ const storageApi: StateStorage = {
       console.log(error);
       return null;
     }
-
   },
   setItem: async function (name: string, value: string): Promise<void> {
     const data = await fetch(`${firebaseUrl}/${name}.json`, {
@@ -28,6 +28,7 @@ const storageApi: StateStorage = {
   },
   removeItem: function (name: string): unknown | Promise<unknown> {
     // console.log("removeItem", name);
+    return null;
   },
 };
 
