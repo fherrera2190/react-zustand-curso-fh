@@ -2,7 +2,6 @@ import { createJSONStorage, StateStorage } from "zustand/middleware";
 import { config } from "../../config/config";
 
 const firebaseUrl = config.firebaseUrl;
-console.log(config.firebaseUrl);
 
 const storageApi: StateStorage = {
   getItem: async function (name: string): Promise<string | null> {
@@ -28,6 +27,7 @@ const storageApi: StateStorage = {
   },
   removeItem: function (name: string): unknown | Promise<unknown> {
     // console.log("removeItem", name);
+    void name;
     return null;
   },
 };

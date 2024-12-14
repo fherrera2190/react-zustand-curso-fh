@@ -6,13 +6,15 @@ import {
   IoPawOutline,
 } from "react-icons/io5";
 import { WhiteCard } from "../../components";
-import { useBearStore } from "../../stores";
+import { useBearStore, useTaskStore } from "../../stores";
 import { usePersonStore } from "../../stores/person/person.store";
 
 export const Dashboard = () => {
   const totalBears = useBearStore((state) => state.totalBears);
 
   const firstName = usePersonStore((state) => state.firstName);
+
+  const countTask = useTaskStore((state) => state.countTask);
 
   return (
     <>
@@ -36,7 +38,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoListOutline size={50} className="text-indigo-600" />
           <h2>Tareas</h2>
-          <p>Información</p>
+          <p>{countTask()}</p>
         </WhiteCard>
 
         <WhiteCard centered>

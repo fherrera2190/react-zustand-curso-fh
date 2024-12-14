@@ -1,18 +1,28 @@
 import { create, StateCreator } from "zustand";
 import { Task, TaskStatus } from "../../interfaces";
-import { devtools } from "zustand/middleware";
-
+import { devtools, persist } from "zustand/middleware";
+import { v4 } from "uuid";
+// import { produce } from "immer";
+import { immer } from "zustand/middleware/immer";
 interface TaskState {
   draggingTaskId?: string;
   tasks: Record<string, Task>;
 
+  changeTaskStatus: (taskId: string, status: TaskStatus) => void;
   getTaskByStatus: (status: TaskStatus) => Task[];
-
-  setDraggingTaskId: (taskId: string) => void;
   removeDraggingTaskId: () => void;
+  setDraggingTaskId: (taskId: string) => void;
+  onTaskDrop: (status: TaskStatus) => void;
+
+  addTask: (title: string, status: TaskStatus) => void;
+
+  countTask: () => number;
 }
 
-const storeApi: StateCreator<TaskState> = (set, get) => ({
+const storeApi: StateCreator<TaskState, [["zustand/immer", never]]> = (
+  set,
+  get
+) => ({
   tasks: {
     "ABC-1": {
       id: "ABC-1",
@@ -46,6 +56,48 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
   },
 
   removeDraggingTaskId: () => set({ draggingTaskId: undefined }),
+
+  changeTaskStatus: (taskId: string, status: TaskStatus) => {
+    set((state) => {
+      state.tasks[taskId] = {
+        ...state.tasks[taskId],
+        status,
+      };
+    });
+  },
+  onTaskDrop: (status: TaskStatus) => {
+    const taskId = get().draggingTaskId;
+    if (!taskId) return;
+    get().changeTaskStatus(taskId, status);
+    get().removeDraggingTaskId();
+  },
+  addTask: (title: string, status: TaskStatus) => {
+    const newTask = { id: v4(), title, status };
+
+    //Middelware immer nativo
+    set((state) => {
+      state.tasks[newTask.id] = newTask;
+    });
+
+    // set((state) => ({
+    //   tasks: {
+    //     ...state.tasks,
+    //     [newTask.id]: newTask,
+    //   },
+    // }));
+
+    // Mutando el estado con immer sin middleware
+    // set(
+    //   produce((state: TaskState) => {
+    //     state.tasks[newTask.id] = newTask;
+    //   })
+    // );
+  },
+  countTask: () => {
+    return Object.keys(get().tasks).length;
+  },
 });
 
-export const useTaskStore = create<TaskState>()(devtools(storeApi));
+export const useTaskStore = create<TaskState>()(
+  devtools(persist(immer(storeApi), { name: "task-storage" }))
+);

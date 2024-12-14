@@ -1,37 +1,23 @@
-import {
-  IoCheckmarkCircleOutline,
-  IoEllipsisHorizontalOutline,
-} from "react-icons/io5";
+import { IoAddOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { Task, TaskStatus } from "../../interfaces";
 import { SingleTask } from "./SingleTask";
-import { DragEvent } from "react";
-import { useTaskStore } from "../../stores";
 import classNames from "classnames";
-
+import { useTask } from "../../hooks/useTask";
 interface Props {
   title: string;
-  value: TaskStatus;
+  status: TaskStatus;
   tasks: Task[];
 }
 
-export const JiraTasks = ({ title, value, tasks }: Props) => {
-  const isDragging = useTaskStore((state) => !!state.draggingTaskId);
-
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    console.log("onDragOver");
-  };
-
-  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-
-    console.log("onDragLeave ");
-  };
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-
-    console.log("onDrop", value);
-  };
+export const JiraTasks = ({ title, status, tasks }: Props) => {
+  const {
+    handleAddTask,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    isDragging,
+    onDragOver,
+  } = useTask({ status });
 
   return (
     <div
@@ -42,6 +28,7 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
         "!text-black border-4 relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]",
         {
           "border-blue-500 border-dotted": isDragging,
+          "border-green-500 border-dotted": isDragging && onDragOver,
         }
       )}
     >
@@ -57,8 +44,8 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
           <h4 className="ml-4 text-xl font-bold text-navy-700">{title}</h4>
         </div>
 
-        <button>
-          <IoEllipsisHorizontalOutline />
+        <button onClick={handleAddTask}>
+          <IoAddOutline />
         </button>
       </div>
 
