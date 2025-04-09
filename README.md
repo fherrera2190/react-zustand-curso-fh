@@ -1,14 +1,49 @@
-# React + TypeScript + Vite + Zustand + TailwindCSS + ReactRouterDom
+# Curso de React, Zustand y TypeScript - Fernando Herrera
 
-Este es un cascarón de proyecto, siéntete libre de usarlo para tus proyectos.
+Este proyecto es parte del curso de **React, Zustand y TypeScript** impartido por Fernando Herrera.
 
-<img src="https://github.com/Klerith/zustand-mini-curso/blob/main/public/screenshot.png?raw=true" alt="Dashboard Screenshot">
+## Instalación
 
+Sigue estos pasos para instalar y ejecutar el proyecto:
 
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/fherrera2190/react-zustand-curso-fh.git
+   ```
+2. Acceder a la carpeta del proyecto:
+   ```bash
+   cd react-zustand-curso-fh
+   ```
+3. Instalar las dependencias:
+   ```bash
+   npm install
+   ```
+4. Iniciar el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
 
-## Instalar
+## Usuario de prueba
 
-1. Clonar proyecto
-2. Instalar dependencias ```npm install```
-3. Correr en desarrollo ```npm run dev```
+Para probar la aplicación, puedes usar las siguientes credenciales:
+
+- **Usuario:** test1@test.com  
+- **Contraseña:** test1123456@A  
+
+## Tecnologías utilizadas
+
+- **React** - Biblioteca para la creación de interfaces de usuario.
+- **Zustand** - Gestión de estado simple y escalable.
+- **TypeScript** - Superset tipado de JavaScript.
+
+## Recursos adicionales
+
+- [Curso de Fernando Herrera](https://fernando-herrera.com)
+- [Documentación de React](https://react.dev/)
+- [Documentación de Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- [Documentación de TypeScript](https://www.typescriptlang.org/)
+
+## Licencia
+
+Este proyecto se proporciona bajo la licencia MIT.
 
